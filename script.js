@@ -30,7 +30,7 @@ const data = [
   {
     image: "./img/happy.jpeg",
     english: "I'm Happy",
-    espanol: "Estoy contento",
+    espanol: "Estoy feliz",
   },
   {
     image: "./img/angry.jpeg",
@@ -170,6 +170,9 @@ function clearMain() {
 }
 
 languajeBtn.addEventListener("click", () => {
+  clearMain();
+  languajeBtn.innerText = "";
+
   if (setLang === "eng") {
     setLang = "esp";
     message.voice = voices.find((voice) => voice.name === "Diego");
@@ -180,7 +183,6 @@ languajeBtn.addEventListener("click", () => {
     languajeBtn.innerText = "English";
   }
 
-  clearMain();
   createData();
 });
 
