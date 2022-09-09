@@ -1,11 +1,17 @@
 @import url("https://fonts.googleapis.com/css?family=Lato");
 
+:root {
+  --Main-color-1: hsla(151, 50%, 77%, 0.612);
+  --Main-color-2: #4ad391;
+  --Main-color-3: #dd1155;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #ffefea;
+  background: var(--Main-color-1);
   font-family: "Lato", sans-serif;
   min-height: 100vh;
   margin: 0;
@@ -22,7 +28,7 @@ h1 {
 
 .btn {
   cursor: pointer;
-  background-color: darksalmon;
+  background-color: var(--Main-color-2);
   border: 0;
   border-radius: 4px;
   color: #fff;
@@ -63,7 +69,7 @@ select:focus {
 }
 
 .text-box select {
-  background-color: darksalmon;
+  background-color: var(--Main-color-2);
   border: 0;
   color: #fff;
   font-size: 12px;
@@ -103,22 +109,24 @@ main {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   overflow: hidden;
-  transition: box-shadow 0.2s ease-out;
+  transition: box-shadow 0.4s ease-out;
 }
 
 .box.active {
-  box-shadow: 0 0 10px 5px darksalmon;
+  box-shadow: 0 0 10px 5px var(--Main-color-3);
 }
 
 .box img {
   width: 100%;
   object-fit: cover;
   height: 100%;
+  max-height: 200px;
 }
 
 .box .info {
-  background-color: darksalmon;
+  background-color: var(--Main-color-2);
   color: #fff;
   font-size: 18px;
   letter-spacing: 1px;
