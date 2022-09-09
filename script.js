@@ -4,70 +4,69 @@ const main = document.querySelector("main"),
   readBtn = document.getElementById("read"),
   toggleBtn = document.getElementById("toggle"),
   languajeBtn = document.getElementById("languaje"),
-  closeBtn = document.getElementById("close");
-
-const data = [
-  {
-    image: "./img/drink.jpeg",
-    english: "I'm Thirsty",
-    espanol: "Tengo sed",
-  },
-  {
-    image: "./img/food.jpeg",
-    english: "I'm Hungry",
-    espanol: "tengo hambre",
-  },
-  {
-    image: "./img/sleep.jpg",
-    english: "I'm Tired",
-    espanol: "Estoy cansado",
-  },
-  {
-    image: "./img/hurt.jpeg",
-    english: "I'm Hurt",
-    espanol: "Estoy lastimado",
-  },
-  {
-    image: "./img/happy.jpeg",
-    english: "I'm Happy",
-    espanol: "Estoy feliz",
-  },
-  {
-    image: "./img/angry.jpeg",
-    english: "I'm Angry",
-    espanol: "Estoy enojado",
-  },
-  {
-    image: "./img/sad.jpg",
-    english: "I'm Sad",
-    espanol: "Estoy triste",
-  },
-  {
-    image: "./img/scared.jpeg",
-    english: "I'm Scared",
-    espanol: "Tengo miedo",
-  },
-  {
-    image: "./img/outside.jpeg",
-    english: "I Want To Go Outside",
-    espanol: "Quiero salir",
-  },
-  {
-    image: "./img/home.jpeg",
-    english: "I Want To Go Home",
-    espanol: "Quiero ir a casa",
-  },
-  {
-    image: "./img/school.jpeg",
-    english: "I Want To Go To School",
-    espanol: "Quiero ir a la escuela",
-  },
-  {
-    image: "./img/grandma.jpeg",
-    english: "I Want To Go To Grandmas",
-    espanol: "Quiero ir a la casa de la abuela",
-  },
-];
+  closeBtn = document.getElementById("close"),
+  data = [
+    {
+      image: "./img/drink.jpeg",
+      english: "I'm Thirsty",
+      espanol: "Tengo sed",
+    },
+    {
+      image: "./img/food.jpeg",
+      english: "I'm Hungry",
+      espanol: "tengo hambre",
+    },
+    {
+      image: "./img/sleep.jpg",
+      english: "I'm Tired",
+      espanol: "Estoy cansado",
+    },
+    {
+      image: "./img/hurt.jpeg",
+      english: "I'm Hurt",
+      espanol: "Estoy lastimado",
+    },
+    {
+      image: "./img/happy.jpeg",
+      english: "I'm Happy",
+      espanol: "Estoy feliz",
+    },
+    {
+      image: "./img/angry.jpeg",
+      english: "I'm Angry",
+      espanol: "Estoy enojado",
+    },
+    {
+      image: "./img/sad.jpg",
+      english: "I'm Sad",
+      espanol: "Estoy triste",
+    },
+    {
+      image: "./img/scared.jpeg",
+      english: "I'm Scared",
+      espanol: "Tengo miedo",
+    },
+    {
+      image: "./img/outside.jpeg",
+      english: "I Want To Go Outside",
+      espanol: "Quiero salir",
+    },
+    {
+      image: "./img/home.jpeg",
+      english: "I Want To Go Home",
+      espanol: "Quiero ir a casa",
+    },
+    {
+      image: "./img/school.jpeg",
+      english: "I Want To Go To School",
+      espanol: "Quiero ir a la escuela",
+    },
+    {
+      image: "./img/grandma.jpeg",
+      english: "I Want To Go To Grandmas",
+      espanol: "Quiero ir a la casa de la abuela",
+    },
+  ];
 
 let setLang = "eng";
 
@@ -175,12 +174,12 @@ languajeBtn.addEventListener("click", () => {
 
   if (setLang === "eng") {
     setLang = "esp";
-    message.voice = voices.find((voice) => voice.name === "Diego");
     languajeBtn.innerText = "Español";
+    message.voice = voices.find((voice) => voice.name === "Diego");
   } else {
     setLang = "eng";
-    message.voice = voices.find((voice) => voice.name === "Alex");
     languajeBtn.innerText = "English";
+    message.voice = voices.find((voice) => voice.name === "Alex");
   }
 
   createData();
