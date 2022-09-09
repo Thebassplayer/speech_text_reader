@@ -51,6 +51,10 @@ select:focus {
   margin-bottom: 20px;
 }
 
+.menu {
+  display: inline-block;
+}
+
 .text-box {
   width: 70%;
   position: absolute;

@@ -1,68 +1,91 @@
-const main = document.querySelector("main");
-const voicesSelect = document.getElementById("voices");
-const textarea = document.getElementById("text");
-const readBtn = document.getElementById("read");
-const toggleBtn = document.getElementById("toggle");
-const closeBtn = document.getElementById("close");
+const main = document.querySelector("main"),
+  voicesSelect = document.getElementById("voices"),
+  textarea = document.getElementById("text"),
+  readBtn = document.getElementById("read"),
+  toggleBtn = document.getElementById("toggle"),
+  languajeBtn = document.getElementById("languaje"),
+  closeBtn = document.getElementById("close");
 
 const data = [
   {
     image: "./img/drink.jpeg",
-    text: "I'm Thirsty",
+    english: "I'm Thirsty",
+    espanol: "Tengo sed",
   },
   {
     image: "./img/food.jpeg",
-    text: "I'm Hungry",
+    english: "I'm Hungry",
+    espanol: "tengo hambre",
   },
   {
     image: "./img/sleep.jpg",
-    text: "I'm Tired",
+    english: "I'm Tired",
+    espanol: "Estoy cansado",
   },
   {
     image: "./img/hurt.jpeg",
-    text: "I'm Hurt",
+    english: "I'm Hurt",
+    espanol: "Estoy lastimado",
   },
   {
     image: "./img/happy.jpeg",
-    text: "I'm Happy",
+    english: "I'm Happy",
+    espanol: "Estoy contento",
   },
   {
     image: "./img/angry.jpeg",
-    text: "I'm Angry",
+    english: "I'm Angry",
+    espanol: "Estoy enojado",
   },
   {
     image: "./img/sad.jpg",
-    text: "I'm Sad",
+    english: "I'm Sad",
+    espanol: "Estoy triste",
   },
   {
     image: "./img/scared.jpeg",
-    text: "I'm Scared",
+    english: "I'm Scared",
+    espanol: "Tengo miedo",
   },
   {
     image: "./img/outside.jpeg",
-    text: "I Want To Go Outside",
+    english: "I Want To Go Outside",
+    espanol: "Quiero salir",
   },
   {
     image: "./img/home.jpeg",
-    text: "I Want To Go Home",
+    english: "I Want To Go Home",
+    espanol: "Quiero ir a casa",
   },
   {
     image: "./img/school.jpeg",
-    text: "I Want To Go To School",
+    english: "I Want To Go To School",
+    espanol: "Quiero ir a la escuela",
   },
   {
     image: "./img/grandma.jpeg",
-    text: "I Want To Go To Grandmas",
+    english: "I Want To Go To Grandmas",
+    espanol: "Quiero ir a la casa de la abuela",
   },
 ];
 
-data.forEach(createBox);
+let setLang = "eng";
+
+function createData() {
+  data.forEach(createBox);
+}
 
 // Create speech boxes
 function createBox(item) {
   const box = document.createElement("div");
 
-  const { image, text } = item;
+  const { image, english, espanol } = item;
+
+  let text = english;
+
+  if (setLang === "esp") {
+    text = espanol;
+  }
 
   box.classList.add("box");
 
@@ -82,6 +105,8 @@ function createBox(item) {
 
   main.appendChild(box);
 }
+
+createData();
 
 // Init speech synth
 const message = new SpeechSynthesisUtterance();
@@ -137,6 +162,26 @@ voicesSelect.addEventListener("change", setVoice);
 readBtn.addEventListener("click", () => {
   setTextMessage(textarea.value);
   speakText();
+});
+
+// Clear Main
+function clearMain() {
+  main.innerHTML = "";
+}
+
+languajeBtn.addEventListener("click", () => {
+  if (setLang === "eng") {
+    setLang = "esp";
+    message.voice = voices.find((voice) => voice.name === "Diego");
+    languajeBtn.innerText = "Español";
+  } else {
+    setLang = "eng";
+    message.voice = voices.find((voice) => voice.name === "Alex");
+    languajeBtn.innerText = "English";
+  }
+
+  clearMain();
+  createData();
 });
 
 getVoices();
