@@ -26,14 +26,21 @@ h1 {
   padding: 20px;
 }
 
+.btn-menu-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
 .btn {
   cursor: pointer;
   background-color: var(--Main-color-2);
   border: 0;
   border-radius: 4px;
   color: #fff;
-  font-size: 16px;
-  padding: 8px;
+  font-size: 1em;
+  padding: 8px 4px;
+  text-transform: uppercase;
 }
 
 .btn:active {
@@ -43,16 +50,6 @@ h1 {
 .btn:focus,
 select:focus {
   outline: 0;
-}
-
-.btn-toggle {
-  display: block;
-  margin: auto;
-  margin-bottom: 20px;
-}
-
-.menu {
-  display: inline-block;
 }
 
 .text-box {
@@ -132,7 +129,7 @@ main {
 .box .info {
   background-color: var(--Main-color-2);
   color: #fff;
-  font-size: 18px;
+  font-size: 1.2em;
   letter-spacing: 1px;
   text-transform: uppercase;
   margin: 0;

@@ -4,6 +4,7 @@ const main = document.querySelector("main"),
   readBtn = document.getElementById("read"),
   toggleBtn = document.getElementById("toggle"),
   languajeBtn = document.getElementById("languaje"),
+  genderBtn = document.getElementById("gender-btn"),
   closeBtn = document.getElementById("close"),
   data = [
     {
@@ -68,21 +69,22 @@ const main = document.querySelector("main"),
     },
   ];
 
-let setLang = "eng";
+let lang = "eng",
+  gender = "m";
 
 function createData() {
   data.forEach(createBox);
 }
 
 // Create speech boxes
-function createBox(item) {
+function createBox(el) {
   const box = document.createElement("div");
 
-  const { image, english, espanol } = item;
+  const { image, english, espanol } = el;
 
   let text = english;
 
-  if (setLang === "esp") {
+  if (lang === "esp") {
     text = espanol;
   }
 
@@ -168,21 +170,67 @@ function clearMain() {
   main.innerHTML = "";
 }
 
-languajeBtn.addEventListener("click", () => {
+// Set Languaje
+function setLanguaje() {
   clearMain();
-  languajeBtn.innerText = "";
 
-  if (setLang === "eng") {
-    setLang = "esp";
-    languajeBtn.innerText = "Español";
-    message.voice = voices.find((voice) => voice.name === "Diego");
+  if (lang === "eng") {
+    lang = "esp";
+    languajeBtn.innerText = "Español 🇪🇸";
+    toggleBtn.innerText = "leer 🗣️";
+    if (gender === "f") {
+      genderBtn.innerText = "mujer 👩‍🔬";
+      message.voice = voices.find((voice) => voice.name === "Monica");
+    } else {
+      genderBtn.innerText = "hombre 👨‍🚀";
+      message.voice = voices.find((voice) => voice.name === "Diego");
+    }
   } else {
-    setLang = "eng";
-    languajeBtn.innerText = "English";
-    message.voice = voices.find((voice) => voice.name === "Alex");
+    lang = "eng";
+    languajeBtn.innerText = "English 🇬🇧";
+    toggleBtn.innerText = "read 🗣️";
+    if (gender === "f") {
+      genderBtn.innerText = "female 👩‍🔬";
+      message.voice = voices.find((voice) => voice.name === "Samantha");
+    } else {
+      genderBtn.innerText = "male 👨‍🚀";
+      message.voice = voices.find((voice) => voice.name === "Alex");
+    }
   }
-
   createData();
+}
+
+// Set gender
+function setGender() {
+  if (gender === "f") {
+    gender = "m";
+    if (lang === "eng") {
+      genderBtn.innerText = "male 👨‍🚀";
+      message.voice = voices.find((voice) => voice.name === "Alex");
+    } else {
+      genderBtn.innerText = "hombre 👨‍🚀";
+      message.voice = voices.find((voice) => voice.name === "Diego");
+    }
+  } else {
+    gender = "f";
+    if (lang === "eng") {
+      genderBtn.innerText = "female 👩‍🔬";
+      message.voice = voices.find((voice) => voice.name === "Samantha");
+    } else {
+      genderBtn.innerText = "mujer 👩‍🔬";
+      message.voice = voices.find((voice) => voice.name === "Monica");
+    }
+  }
+  console.log(gender);
+}
+
+// Event Listeners
+languajeBtn.addEventListener("click", () => {
+  setLanguaje();
+});
+
+genderBtn.addEventListener("click", () => {
+  setGender();
 });
 
 getVoices();
