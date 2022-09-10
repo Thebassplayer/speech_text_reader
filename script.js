@@ -1,9 +1,11 @@
 const titleEl = document.querySelector("title");
 const bodyEl = document.querySelector("body");
-const h1El = document.querySelector("h1");
+const mainHeaderEl = document.querySelector("h1");
+const customMsgHeaderEl = document.getElementById("choose-voice");
+const voiceSupportMsgEl = document.getElementById("voice-support");
 const mainEl = document.querySelector("main");
 const voicesMenu = document.getElementById("voices");
-const customMsgTextArea = document.getElementById("text");
+const customMsgTextArea = document.getElementById("custom-text");
 const readCustomMsgBtn = document.getElementById("read");
 const customMessageBtn = document.getElementById("toggle");
 const languajeBtn = document.getElementById("languaje");
@@ -158,6 +160,11 @@ function toggleGlobalLanguaje() {
   switch (globalLanguaje) {
     case "esp":
       globalLanguaje = "eng";
+      titleEl.innerText = "Personal Speaker";
+      mainHeaderEl.innerText = "Personal Speaker";
+      customMsgHeaderEl.innerText = "Choose voice";
+      voiceSupportMsgEl.innerText =
+        "-Other voices are not supported on mobile browsers, Alex will read for you-";
       languajeBtn.innerText = "🇬🇧";
       if (gender === "female") {
         setVoice("Samantha");
@@ -168,6 +175,11 @@ function toggleGlobalLanguaje() {
 
     case "eng":
       globalLanguaje = "esp";
+      titleEl.innerText = "Orador Personal";
+      mainHeaderEl.innerText = "Orador Personal";
+      customMsgHeaderEl.innerText = "Elige una voz";
+      voiceSupportMsgEl.innerText =
+        "-Otras voces no son soportadas en navegadores moviles, Alex leera por ti-";
       languajeBtn.innerText = "🇪🇸";
       if (gender === "female") {
         setVoice("Monica");
@@ -209,12 +221,12 @@ function toggleGender() {
 
 // Toggle text box
 customMessageBtn.addEventListener("click", () =>
-  document.getElementById("text-box").classList.toggle("show")
+  document.getElementById("custom-text-box").classList.toggle("show")
 );
 
 // Close button
 closeCustoMsgBtn.addEventListener("click", () =>
-  document.getElementById("text-box").classList.remove("show")
+  document.getElementById("custom-text-box").classList.remove("show")
 );
 
 // Change voice

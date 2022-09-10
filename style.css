@@ -50,7 +50,7 @@ select:focus {
   outline: 0;
 }
 
-.text-box {
+.custom-text-box {
   width: 70%;
   position: absolute;
   top: 30%;
@@ -63,11 +63,11 @@ select:focus {
   transition: all 1s ease-in-out;
 }
 
-.text-box.show {
+.custom-text-box.show {
   transform: translate(-50%, 0);
 }
 
-.text-box select {
+.custom-text-box select {
   background-color: var(--Main-color-2);
   border: 0;
   color: #fff;
@@ -76,7 +76,7 @@ select:focus {
   width: 100%;
 }
 
-.text-box textarea {
+.custom-text-box textarea {
   border: 1px #dadada solid;
   border-radius: 4px;
   font-size: 16px;
@@ -86,11 +86,11 @@ select:focus {
   height: 150px;
 }
 
-.text-box .btn {
+.custom-text-box .btn {
   width: 100%;
 }
 
-.text-box .close {
+.custom-text-box .close {
   float: right;
   text-align: right;
   cursor: pointer;
@@ -135,6 +135,10 @@ main {
   text-align: center;
 }
 
+.voice-support {
+  display: none;
+}
+
 @media (max-width: 1100px) {
   main {
     grid-template-columns: repeat(3, 1fr);
@@ -159,5 +163,16 @@ main {
   }
   .btn {
     font-size: 2.5em;
+  }
+
+  #choose-voice {
+    display: none;
+  }
+
+  .voice-support {
+    display: block;
+  }
+  #voices {
+    display: none;
   }
 }
