@@ -1,3 +1,6 @@
+const titleEl = document.querySelector("title");
+const bodyEl = document.querySelector("body");
+const h1El = document.querySelector("h1");
 const mainEl = document.querySelector("main");
 const voicesMenu = document.getElementById("voices");
 const customMsgTextArea = document.getElementById("text");
@@ -69,45 +72,45 @@ const data = [
   },
 ];
 
-let languaje = "eng";
+let globalLanguaje = "eng";
 let gender = "male";
 
-function generateMainButtons() {
+function generateMainElButtons() {
   data.forEach(createButtons);
 }
 
 // Create speech boxes
 function createButtons(el) {
-  const btnBox = document.createElement("div");
+  const btnBoxEl = document.createElement("div");
 
   const { image, englishText, espanolText } = el;
 
   let buttonsText = englishText;
 
-  if (languaje === "esp") {
+  if (globalLanguaje === "esp") {
     buttonsText = espanolText;
   }
 
-  btnBox.classList.add("box");
+  btnBoxEl.classList.add("box");
 
-  btnBox.innerHTML = `
+  btnBoxEl.innerHTML = `
     <img src="${image}" alt="${buttonsText}" />
     <p class="info">${buttonsText}</p>
   `;
 
-  btnBox.addEventListener("click", () => {
+  btnBoxEl.addEventListener("click", () => {
     setVoiceMessage(buttonsText);
     speakText();
 
     // Add active effect
-    btnBox.classList.add("active");
-    setTimeout(() => btnBox.classList.remove("active"), 800);
+    btnBoxEl.classList.add("active");
+    setTimeout(() => btnBoxEl.classList.remove("active"), 800);
   });
 
-  mainEl.appendChild(btnBox);
+  mainEl.appendChild(btnBoxEl);
 }
 
-generateMainButtons();
+generateMainElButtons();
 
 // Init speech synth
 const speaker = new SpeechSynthesisUtterance();
@@ -139,10 +142,8 @@ function speakText() {
 }
 
 // Set voice
-function setVoice(e) {
-  speaker.voice = voicesCollection.find(
-    (voice) => voice.name === e.target.value
-  );
+function setVoice(name) {
+  speaker.voice = voicesCollection.find((voice) => voice.name === name);
 }
 
 // Clear Main
@@ -151,59 +152,56 @@ function clearMainEl() {
 }
 
 // Set Languaje
-function setGlobalLanguaje() {
+function toggleGlobalLanguaje() {
   clearMainEl();
 
-  if (languaje === "eng") {
-    languaje = "esp";
-    languajeBtn.innerText = "🇪🇸";
-    customMessageBtn.innerText = "🗣️";
-    if (gender === "female") {
-      genderBtn.innerText = "👩‍🔬";
-      speaker.voice = voicesCollection.find((voice) => voice.name === "Monica");
-    } else {
-      genderBtn.innerText = "👨‍🚀";
-      speaker.voice = voicesCollection.find((voice) => voice.name === "Diego");
-    }
-  } else {
-    languaje = "eng";
-    languajeBtn.innerText = "🇬🇧";
-    customMessageBtn.innerText = "🗣️";
-    if (gender === "female") {
-      genderBtn.innerText = "👩‍🔬";
-      speaker.voice = voicesCollection.find(
-        (voice) => voice.name === "Samantha"
-      );
-    } else {
-      genderBtn.innerText = "👨‍🚀";
-      speaker.voice = voicesCollection.find((voice) => voice.name === "Alex");
-    }
+  switch (globalLanguaje) {
+    case "esp":
+      globalLanguaje = "eng";
+      languajeBtn.innerText = "🇬🇧";
+      if (gender === "female") {
+        setVoice("Samantha");
+      } else {
+        setVoice("Alex");
+      }
+      break;
+
+    case "eng":
+      globalLanguaje = "esp";
+      languajeBtn.innerText = "🇪🇸";
+      if (gender === "female") {
+        setVoice("Monica");
+      } else {
+        setVoice("Diego");
+      }
+      break;
   }
-  generateMainButtons();
+
+  generateMainElButtons();
 }
 
 // Set gender
-function setGender() {
-  if (gender === "female") {
-    gender = "male";
-    if (languaje === "eng") {
+function toggleGender() {
+  switch (gender) {
+    case "female":
+      gender = "male";
       genderBtn.innerText = "👨‍🚀";
-      speaker.voice = voicesCollection.find((voice) => voice.name === "Alex");
-    } else {
-      genderBtn.innerText = "👨‍🚀";
-      speaker.voice = voicesCollection.find((voice) => voice.name === "Diego");
-    }
-  } else {
-    gender = "female";
-    if (languaje === "eng") {
+      if (globalLanguaje === "eng") {
+        setVoice("Alex");
+      } else {
+        setVoice("Diego");
+      }
+      break;
+
+    case "male":
+      gender = "female";
       genderBtn.innerText = "👩‍🔬";
-      speaker.voice = voicesCollection.find(
-        (voice) => voice.name === "Samantha"
-      );
-    } else {
-      genderBtn.innerText = "👩‍🔬";
-      speaker.voice = voicesCollection.find((voice) => voice.name === "Monica");
-    }
+      if (globalLanguaje === "eng") {
+        setVoice("Monica");
+      } else {
+        setVoice("Samantha");
+      }
+      break;
   }
 }
 
@@ -223,7 +221,9 @@ closeCustoMsgBtn.addEventListener("click", () =>
 );
 
 // Change voice
-voicesMenu.addEventListener("change", setVoice);
+voicesMenu.addEventListener("change", (e) => {
+  setVoice(e.target.value);
+});
 
 // Read text button
 readCustomMsgBtn.addEventListener("click", () => {
@@ -233,12 +233,12 @@ readCustomMsgBtn.addEventListener("click", () => {
 
 // languaje Button
 languajeBtn.addEventListener("click", () => {
-  setGlobalLanguaje();
+  toggleGlobalLanguaje();
 });
 
 // Gender Button
 genderBtn.addEventListener("click", () => {
-  setGender();
+  toggleGender();
 });
 
 initVoices();
