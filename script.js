@@ -1,234 +1,239 @@
-const main = document.querySelector("main"),
-  voicesSelect = document.getElementById("voices"),
-  textarea = document.getElementById("text"),
-  readBtn = document.getElementById("read"),
-  toggleBtn = document.getElementById("toggle"),
-  languajeBtn = document.getElementById("languaje"),
-  genderBtn = document.getElementById("gender-btn"),
-  closeBtn = document.getElementById("close"),
-  data = [
-    {
-      image: "./img/drink.jpeg",
-      english: "I'm Thirsty",
-      espanol: "Tengo sed",
-    },
-    {
-      image: "./img/food.jpeg",
-      english: "I'm Hungry",
-      espanol: "tengo hambre",
-    },
-    {
-      image: "./img/sleep.jpg",
-      english: "I'm Tired",
-      espanol: "Estoy cansado",
-    },
-    {
-      image: "./img/hurt.jpeg",
-      english: "I'm Hurt",
-      espanol: "Estoy lastimado",
-    },
-    {
-      image: "./img/happy.jpeg",
-      english: "I'm Happy",
-      espanol: "Estoy feliz",
-    },
-    {
-      image: "./img/angry.jpeg",
-      english: "I'm Angry",
-      espanol: "Estoy enojado",
-    },
-    {
-      image: "./img/sad.jpg",
-      english: "I'm Sad",
-      espanol: "Estoy triste",
-    },
-    {
-      image: "./img/scared.jpeg",
-      english: "I'm Scared",
-      espanol: "Tengo miedo",
-    },
-    {
-      image: "./img/outside.jpeg",
-      english: "I Want To Go Outside",
-      espanol: "Quiero salir",
-    },
-    {
-      image: "./img/home.jpeg",
-      english: "I Want To Go Home",
-      espanol: "Quiero ir a casa",
-    },
-    {
-      image: "./img/school.jpeg",
-      english: "I Want To Go To School",
-      espanol: "Quiero ir a la escuela",
-    },
-    {
-      image: "./img/grandma.jpeg",
-      english: "I Want To Go To Grandmas",
-      espanol: "Quiero ir a la casa de la abuela",
-    },
-  ];
+const mainEl = document.querySelector("main");
+const voicesMenu = document.getElementById("voices");
+const customMsgTextArea = document.getElementById("text");
+const readCustomMsgBtn = document.getElementById("read");
+const customMessageBtn = document.getElementById("toggle");
+const languajeBtn = document.getElementById("languaje");
+const genderBtn = document.getElementById("gender-btn");
+const closeCustoMsgBtn = document.getElementById("close");
+const data = [
+  {
+    image: "./img/drink.jpeg",
+    englishText: "I'm Thirsty",
+    espanolText: "Tengo sed",
+  },
+  {
+    image: "./img/food.jpeg",
+    englishText: "I'm Hungry",
+    espanolText: "tengo hambre",
+  },
+  {
+    image: "./img/sleep.jpg",
+    englishText: "I'm Tired",
+    espanolText: "Estoy cansado",
+  },
+  {
+    image: "./img/hurt.jpeg",
+    englishText: "I'm Hurt",
+    espanolText: "Estoy lastimado",
+  },
+  {
+    image: "./img/happy.jpeg",
+    englishText: "I'm Happy",
+    espanolText: "Estoy feliz",
+  },
+  {
+    image: "./img/angry.jpeg",
+    englishText: "I'm Angry",
+    espanolText: "Estoy enojado",
+  },
+  {
+    image: "./img/sad.jpg",
+    englishText: "I'm Sad",
+    espanolText: "Estoy triste",
+  },
+  {
+    image: "./img/scared.jpeg",
+    englishText: "I'm Scared",
+    espanolText: "Tengo miedo",
+  },
+  {
+    image: "./img/outside.jpeg",
+    englishText: "I Want To Go Outside",
+    espanolText: "Quiero salir",
+  },
+  {
+    image: "./img/home.jpeg",
+    englishText: "I Want To Go Home",
+    espanolText: "Quiero ir a casa",
+  },
+  {
+    image: "./img/school.jpeg",
+    englishText: "I Want To Go To School",
+    espanolText: "Quiero ir a la escuela",
+  },
+  {
+    image: "./img/grandma.jpeg",
+    englishText: "I Want To Go To Grandmas",
+    espanolText: "Quiero ir a la casa de la abuela",
+  },
+];
 
-let lang = "eng",
-  gender = "m";
+let languaje = "eng";
+let gender = "male";
 
-function createData() {
-  data.forEach(createBox);
+function generateMainButtons() {
+  data.forEach(createButtons);
 }
 
 // Create speech boxes
-function createBox(el) {
-  const box = document.createElement("div");
+function createButtons(el) {
+  const btnBox = document.createElement("div");
 
-  const { image, english, espanol } = el;
+  const { image, englishText, espanolText } = el;
 
-  let text = english;
+  let buttonsText = englishText;
 
-  if (lang === "esp") {
-    text = espanol;
+  if (languaje === "esp") {
+    buttonsText = espanolText;
   }
 
-  box.classList.add("box");
+  btnBox.classList.add("box");
 
-  box.innerHTML = `
-    <img src="${image}" alt="${text}" />
-    <p class="info">${text}</p>
+  btnBox.innerHTML = `
+    <img src="${image}" alt="${buttonsText}" />
+    <p class="info">${buttonsText}</p>
   `;
 
-  box.addEventListener("click", () => {
-    setTextMessage(text);
+  btnBox.addEventListener("click", () => {
+    setVoiceMessage(buttonsText);
     speakText();
 
     // Add active effect
-    box.classList.add("active");
-    setTimeout(() => box.classList.remove("active"), 800);
+    btnBox.classList.add("active");
+    setTimeout(() => btnBox.classList.remove("active"), 800);
   });
 
-  main.appendChild(box);
+  mainEl.appendChild(btnBox);
 }
 
-createData();
+generateMainButtons();
 
 // Init speech synth
-const message = new SpeechSynthesisUtterance();
+const speaker = new SpeechSynthesisUtterance();
 
 // Store voices
-let voices = [];
+let voicesCollection = [];
 
-function getVoices() {
-  voices = speechSynthesis.getVoices();
+function initVoices() {
+  voicesCollection = speechSynthesis.getVoices();
 
-  voices.forEach((voice) => {
-    const option = document.createElement("option");
+  voicesCollection.forEach((voice) => {
+    const voiceOption = document.createElement("option");
 
-    option.value = voice.name;
-    option.innerText = `${voice.name} ${voice.lang}`;
+    voiceOption.value = voice.name;
+    voiceOption.innerText = `${voice.name} ${voice.lang}`;
 
-    voicesSelect.appendChild(option);
+    voicesMenu.appendChild(voiceOption);
   });
 }
 
 // Set text
-function setTextMessage(text) {
-  message.text = text;
+function setVoiceMessage(newText) {
+  speaker.text = newText;
 }
 
 // Speak text
 function speakText() {
-  speechSynthesis.speak(message);
+  speechSynthesis.speak(speaker);
 }
 
 // Set voice
 function setVoice(e) {
-  message.voice = voices.find((voice) => voice.name === e.target.value);
+  speaker.voice = voicesCollection.find(
+    (voice) => voice.name === e.target.value
+  );
 }
 
 // Clear Main
-function clearMain() {
-  main.innerHTML = "";
+function clearMainEl() {
+  mainEl.innerHTML = "";
 }
 
 // Set Languaje
-function setLanguaje() {
-  clearMain();
+function setGlobalLanguaje() {
+  clearMainEl();
 
-  if (lang === "eng") {
-    lang = "esp";
+  if (languaje === "eng") {
+    languaje = "esp";
     languajeBtn.innerText = "🇪🇸";
-    toggleBtn.innerText = "🗣️";
-    if (gender === "f") {
+    customMessageBtn.innerText = "🗣️";
+    if (gender === "female") {
       genderBtn.innerText = "👩‍🔬";
-      message.voice = voices.find((voice) => voice.name === "Monica");
+      speaker.voice = voicesCollection.find((voice) => voice.name === "Monica");
     } else {
       genderBtn.innerText = "👨‍🚀";
-      message.voice = voices.find((voice) => voice.name === "Diego");
+      speaker.voice = voicesCollection.find((voice) => voice.name === "Diego");
     }
   } else {
-    lang = "eng";
+    languaje = "eng";
     languajeBtn.innerText = "🇬🇧";
-    toggleBtn.innerText = "🗣️";
-    if (gender === "f") {
+    customMessageBtn.innerText = "🗣️";
+    if (gender === "female") {
       genderBtn.innerText = "👩‍🔬";
-      message.voice = voices.find((voice) => voice.name === "Samantha");
+      speaker.voice = voicesCollection.find(
+        (voice) => voice.name === "Samantha"
+      );
     } else {
       genderBtn.innerText = "👨‍🚀";
-      message.voice = voices.find((voice) => voice.name === "Alex");
+      speaker.voice = voicesCollection.find((voice) => voice.name === "Alex");
     }
   }
-  createData();
+  generateMainButtons();
 }
 
 // Set gender
 function setGender() {
-  if (gender === "f") {
-    gender = "m";
-    if (lang === "eng") {
+  if (gender === "female") {
+    gender = "male";
+    if (languaje === "eng") {
       genderBtn.innerText = "👨‍🚀";
-      message.voice = voices.find((voice) => voice.name === "Alex");
+      speaker.voice = voicesCollection.find((voice) => voice.name === "Alex");
     } else {
       genderBtn.innerText = "👨‍🚀";
-      message.voice = voices.find((voice) => voice.name === "Diego");
+      speaker.voice = voicesCollection.find((voice) => voice.name === "Diego");
     }
   } else {
-    gender = "f";
-    if (lang === "eng") {
+    gender = "female";
+    if (languaje === "eng") {
       genderBtn.innerText = "👩‍🔬";
-      message.voice = voices.find((voice) => voice.name === "Samantha");
+      speaker.voice = voicesCollection.find(
+        (voice) => voice.name === "Samantha"
+      );
     } else {
       genderBtn.innerText = "👩‍🔬";
-      message.voice = voices.find((voice) => voice.name === "Monica");
+      speaker.voice = voicesCollection.find((voice) => voice.name === "Monica");
     }
   }
-  console.log(gender);
 }
 
 //! Event Listeners
 
 // Voices changed
-speechSynthesis.addEventListener("voiceschanged", getVoices);
+speechSynthesis.addEventListener("voiceschanged", initVoices);
 
 // Toggle text box
-toggleBtn.addEventListener("click", () =>
+customMessageBtn.addEventListener("click", () =>
   document.getElementById("text-box").classList.toggle("show")
 );
 
 // Close button
-closeBtn.addEventListener("click", () =>
+closeCustoMsgBtn.addEventListener("click", () =>
   document.getElementById("text-box").classList.remove("show")
 );
 
 // Change voice
-voicesSelect.addEventListener("change", setVoice);
+voicesMenu.addEventListener("change", setVoice);
 
 // Read text button
-readBtn.addEventListener("click", () => {
-  setTextMessage(textarea.value);
+readCustomMsgBtn.addEventListener("click", () => {
+  setVoiceMessage(customMsgTextArea.value);
   speakText();
 });
 
 // languaje Button
 languajeBtn.addEventListener("click", () => {
-  setLanguaje();
+  setGlobalLanguaje();
 });
 
 // Gender Button
@@ -236,4 +241,4 @@ genderBtn.addEventListener("click", () => {
   setGender();
 });
 
-getVoices();
+initVoices();
