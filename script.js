@@ -208,7 +208,7 @@ function toggleGender() {
 //! Event Listeners
 
 // Voices changed
-speechSynthesis.addEventListener("voiceschanged", initVoices);
+SpeechSynthesis.addEventListener("voiceschanged", initVoices);
 
 // Toggle text box
 customMessageBtn.addEventListener("click", () =>
